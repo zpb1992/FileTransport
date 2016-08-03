@@ -35,8 +35,7 @@ int TCPServerClosedState::bindTo(int socket, std::string ip, int port, int domai
         addr.sin_port = htons(port);
         addr.sin_addr.s_addr = inet_addr(ip.c_str());
     }
-    bind(socket, (sockaddr *) &addr, sizeof(addr));
-    return 0;
+    return bind(socket, (sockaddr *) &addr, sizeof(addr));
 }
 
 int TCPServerClosedState::lisenTo(int socket, int backlog) {

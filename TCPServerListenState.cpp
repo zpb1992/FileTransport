@@ -29,11 +29,11 @@ int TCPServerListenState::acceptConnect(int socket,std::string &addr,int &port)
 {
     sockaddr_in peerAddr;
     int addrLen;
-    accept(socket, (sockaddr *) &peerAddr, (socklen_t *) &addrLen);
+    int conectedSocket=accept(socket, (sockaddr *) &peerAddr, (socklen_t *) &addrLen);
     addr=inet_ntoa(peerAddr.sin_addr);
     port=ntohs(peerAddr.sin_port);
 
-    return 0;
+    return conectedSocket;
 }
 
 int TCPServerListenState::receiveFrom(int socket, std::string file) {

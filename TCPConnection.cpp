@@ -9,8 +9,6 @@ TCPConnection::TCPConnection(int serverSocket) {
     _serverSocket=serverSocket;
     _state=new TCPServerEstablishedState();
 
-    _file="data.txt";
-    pthread_create(&_threadID, nullptr,newThread,(void *)this);
 }
 
 int TCPConnection::sendTo(std::string file) {
@@ -33,10 +31,17 @@ void TCPConnection::closeConnection() {
 }
 
 void *TCPConnection::newThread(void *arg) {
-    TCPConnection *_this=(TCPConnection *)arg;
-    _this->sendTo(_this->_file);
+    TCPConnection *_thisObj=(TCPConnection *)arg;
+    _thisObj->sendTo(_thisObj->_file);
 
     return nullptr;
 }
+
+void TCPConnection::createThread(std::string file) {
+    _file=file;
+    pthread_create(&_threadID, nullptr,newThread,(void *)this);
+}
+
+
 
 

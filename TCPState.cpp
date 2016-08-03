@@ -27,7 +27,11 @@ int TCPState::recvFile(int socket, std::string file) {
     {
         uint32_t tempBufLen=BUFFER_MAX<(fileLen-recvedLen)?BUFFER_MAX:(fileLen-recvedLen);
         recvedLen+=recv(socket,buffer,tempBufLen,0);
+
+        ofs.write(buffer,recvedLen);
     }
+
+    ofs.close();
 
 
     return fileLen;
@@ -48,10 +52,13 @@ int TCPState::sendFile(int socket, std::string file) {
         send(socket, buffer, (size_t) realReadLen, 0);
     }
 
+    ifs.close();
+
     return fileLen;
 }
 
 uint32_t TCPState::getFileLength(std::ifstream &ifs) {
+    assert(ifs);
     uint32_t result;
     ifs.seekg(0, std::ios_base::end);
     result= (uint32_t) ifs.tellg();
@@ -88,7 +95,7 @@ long long TCPState::charToNum(char *buffer, int len) {
 }
 
 uint32_t TCPState::recvUint32(int socket) {
-    uint32_t result;
+    uint32_t result; // network zijiexu
     ssize_t recvLen=recv(socket,&result,sizeof(result),0);
     assert(recvLen==sizeof(result));
     return ntohl(result);

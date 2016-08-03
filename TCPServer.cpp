@@ -2,6 +2,7 @@
 // Created by zpb on 16-8-3.
 //
 
+#include <iostream>
 #include "TCPServer.h"
 #include "TCPServerClosedState.h"
 #include "TCPServerEstablishedState.h"
@@ -17,7 +18,11 @@ void TCPServer::createSocket(int domain, int type, int protocol) {
 void TCPServer::bindAddr(std::string ip, int port) {
     _serverStringAddr=ip;
     _serverPort=port;
-    _state->bindTo(_listenSocket,_serverStringAddr,_serverPort,_domain);
+    if(_state->bindTo(_listenSocket,_serverStringAddr,_serverPort,_domain)!=0)
+    {
+        std::cout<<"Server bind error"<<std::endl;
+        exit(1);
+    }
 }
 
 void TCPServer::listenTo(int backlog) {
@@ -33,6 +38,7 @@ void TCPServer::acceptConnection() {
     {
         int conectedSocket=_state->acceptConnect(_listenSocket,clientIp,clientPort);
         _connection.push_back(TCPConnection(conectedSocket));
+        _connection.back().createThread("data.txt");
     }
 
 }
