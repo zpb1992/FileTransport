@@ -37,15 +37,18 @@ void TCPServer::acceptConnection() {
     while(1)
     {
         int conectedSocket=_state->acceptConnect(_listenSocket,clientIp,clientPort);
-        _connection.push_back(TCPConnection(conectedSocket));
-        _connection.back().createThread("data.txt");
+        _connection=new TCPConnection(conectedSocket);
+        _connection->createThread();
     }
 
 }
 
 
 void TCPServer::close() {
-
+    delete _state;
+    _state=nullptr;
+    delete _connection;
+    _connection=nullptr;
 }
 
 TCPServer::TCPServer() {

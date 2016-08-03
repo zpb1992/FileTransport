@@ -17,7 +17,7 @@ public:
     int recvFrom(std::string file);
     void closeConnection();
 
-    void createThread(std::string file);
+    void createThread();
     static void *newThread(void *arg);
 
 private:

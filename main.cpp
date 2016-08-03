@@ -4,7 +4,7 @@
 using namespace std;
 
 #include "TCPServer.h"
-#include "TCPClient.h"
+#include "TCPClientFacade.h"
 #include <unistd.h>
 #define PORT 6677
 
@@ -20,11 +20,9 @@ int main() {
     else if(childProcessID>0)
     {
         usleep(1000);
-        TCPClient client;
-        client.createSocket(AF_INET,SOCK_STREAM,0);
-        client.connect("127.0.0.1",PORT);
-        client.recv("recved.txt");
-        client.closeSocket();
+        TCPClientFacade client;
+        client.connectTo("127.0.0.1",PORT);
+        client.recvFile("test2.txt");
     }
     else
     {
