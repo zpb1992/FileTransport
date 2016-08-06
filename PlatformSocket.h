@@ -6,6 +6,7 @@
 #define FILETRANSPORT_PLATFORMSOCKET_H
 
 
+// 定义了当前的OS
 #if (defined(__linux__)|| defined(__linux))
 #define __LINUX__
 #endif
@@ -14,6 +15,7 @@
 #define __WINDOWS__
 #endif
 
+#include <string>
 
 class PlatformSocket {
 public:
@@ -27,7 +29,7 @@ public:
 
     virtual int listenOn(int socket, int backlog) = 0;
 
-    virtual int acceptFrom(int socket, const struct sockaddr *addr, int *addrLen) = 0;
+    virtual int acceptFrom(int socket, struct sockaddr *addr, int *addrLen) = 0;
 
     virtual int sendTo(int socket, void *buffer, int len, int flags) = 0;
 
@@ -47,7 +49,7 @@ public:
 
     virtual unsigned getAddrNum(const char *ip) = 0;
 
-    virtual const char *getAddrStr(unsigned int in) = 0;
+    virtual std::string getAddrStr(unsigned int in) = 0;
 
 
 

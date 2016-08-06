@@ -1,15 +1,22 @@
 //
 // Created by zpb on 16-8-4.
 //
+
+#include "PlatformSocket.h"
+
 #ifdef __WINDOWS__
 
 #include "WindowsSocket.h"
 #include <iostream>
 #include <winsock2.h>
+#include <WS2tcpip.h>
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 
+#pragma comment(lib,"ws2_32.lib")
 
 int WindowsSocket::init() {
-    if(WSAStartup(MAKEWORD(2,2),_Ws)!=0)
+	WSADATA Ws;
+    if(WSAStartup(MAKEWORD(2,2),&Ws)!=0)
     {
         std::cout<<"init windows socket failed"<<std::endl;
         return -1;
@@ -57,7 +64,7 @@ int WindowsSocket::listenOn(int socket, int backlog) {
     return 0;
 }
 
-int WindowsSocket::acceptFrom(int socket, const struct sockaddr *addr, int *addrLen) {
+int WindowsSocket::acceptFrom(int socket, struct sockaddr *addr, int *addrLen) {
     int connectSock=accept(socket,addr,addrLen);
     if(connectSock==INVALID_SOCKET)
     {
@@ -68,7 +75,7 @@ int WindowsSocket::acceptFrom(int socket, const struct sockaddr *addr, int *addr
 }
 
 int WindowsSocket::sendTo(int socket, void *buffer, int len, int flags) {
-    int result=send(socket,buffer,len,flags);
+    int result=send(socket,(const char *)buffer,len,flags);
     if(result==SOCKET_ERROR)
     {
         std::cout<<"windows socket send failed"<<std::endl;
@@ -78,7 +85,7 @@ int WindowsSocket::sendTo(int socket, void *buffer, int len, int flags) {
 }
 
 int WindowsSocket::recvFrom(int socket, void *buffer, int len, int flags) {
-    int result=recv(socket,buffer,len,flags);
+	int result = recv(socket, (char *)buffer, len, flags);
     if(result==0||result==SOCKET_ERROR)
     {
         std::cout<<"client exit"<<std::endl;
@@ -124,10 +131,24 @@ unsigned WindowsSocket::netToHost32(unsigned num) {
 }
 
 unsigned WindowsSocket::getAddrNum(const char *ip){
-    return inet_addr(ip.c_str());
+	unsigned result;
+	if (inet_pton(AF_INET, ip, &result) < 0)
+	{
+		std::cout << "windows socket inet_pton failed" << std::endl;
+		return -1;
+	}
+	return result;
 }
 
-const char *WindowsSocket::getAddrStr(unsigned int in) {
-    return inet_ntoa(in_addr(in));
+std::string WindowsSocket::getAddrStr(unsigned int in) {
+	in_addr tempAddr;
+	tempAddr.S_un.S_addr = in;
+	char result[20];
+	if (inet_ntop(AF_INET, &in, result, sizeof(result)) == nullptr)
+	{
+		std::cout << "windows socket inet_ntop failed" << std::endl;
+		return "";
+	}
+	return std::string(result);
 }
 #endif
