@@ -34,8 +34,7 @@ void *TCPConnection::newThread(void *arg) {
     // TO DO
     TCPConnection *_thisObj=(TCPConnection *)arg;
 
-    _thisObj->sendTo("data.txt");
-    _thisObj->sendTo("test2.txt");
+    _thisObj->sendTo("1.txt");
     return nullptr;
 }
 

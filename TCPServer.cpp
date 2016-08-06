@@ -36,8 +36,9 @@ void TCPServer::acceptConnection() {
     while(1)
     {
         int conectedSocket=_state->acceptConnect(_listenSocket,clientIp,clientPort);
-        _connection=new TCPConnection(conectedSocket);
-        _connection->createThread();
+        TCPConnection *connection=new TCPConnection(conectedSocket);
+        connection->createThread();
+        _connections.push_back(connection);
     }
 
 }
@@ -46,8 +47,9 @@ void TCPServer::acceptConnection() {
 void TCPServer::close() {
     delete _state;
     _state=nullptr;
-    delete _connection;
-    _connection=nullptr;
+    for(int i=0;i<_connections.size();++i)
+        delete _connections[i];
+    _connections.clear();
 }
 
 TCPServer::TCPServer() {

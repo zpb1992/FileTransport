@@ -1,9 +1,16 @@
 //
 // Created by zpb on 16-8-4.
 //
-#ifdef __LINUX__
 
 #include "LinuxSocket.h"
+
+#ifdef __LINUX__
+
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <iostream>
 
 int LinuxSocket::init() {
     return 0;
@@ -46,8 +53,8 @@ int LinuxSocket::listenOn(int socket, int backlog) {
     return 0;
 }
 
-int LinuxSocket::acceptFrom(int socket, const struct sockaddr *addr, int *addrLen) {
-    if(accept(socket,addr,addrLen)==-1)
+int LinuxSocket::acceptFrom(int socket, struct sockaddr *addr, int *addrLen) {
+    if(accept(socket,addr,(socklen_t *)addrLen)==-1)
     {
         std::cout<<"linux socket accept failed"<<std::endl;
         return -1;
@@ -105,11 +112,13 @@ unsigned LinuxSocket::netToHost32(unsigned num) {
 }
 
 unsigned LinuxSocket::getAddrNum(const char *ip){
-    return inet_addr(ip.c_str());
+    return inet_addr(ip);
 }
 
-const char *LinuxSocket::getAddrStr(unsigned int in) {
-    return inet_ntoa(in_addr(in));
+std::string LinuxSocket::getAddrStr(unsigned int in) {
+    in_addr addr;
+    addr.s_addr=in;
+    return inet_ntoa(addr);
 }
 
 #endif

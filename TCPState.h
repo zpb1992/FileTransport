@@ -31,7 +31,7 @@ protected:
     uint32_t recvUint32(int socket);
 
 protected:
-    PlatformSocket *_platform;
+    static PlatformSocket *_platform;
 };
 
 

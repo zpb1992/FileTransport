@@ -3,10 +3,18 @@
 //
 
 #include <cmath>
-#include <sys/socket.h>
 #include <cassert>
-#include <netinet/in.h>
 #include "TCPState.h"
+#include "LinuxSocket.h"
+#include "WindowsSocket.h"
+
+#if (defined(__LINUX__))
+PlatformSocket *TCPState::_platform=new LinuxSocket();
+#elif (defined(__WINDOWS__))
+PlatformSocket *TCPState::_platform=new WindowsSocket();
+#else
+PlatformSocket *TCPState::_platform=nullptr;
+#endif
 
 ssize_t TCPState::recvFrom(int socket, void *data, int len) {
     return _platform->recvFrom(socket,data,len,0);
@@ -39,17 +47,17 @@ int TCPState::recvFile(int socket, std::string file) {
 
 int TCPState::sendFile(int socket, std::string file) {
     std::ifstream ifs(file);
-    uint32_t fileLen = htonl(getFileLength(ifs));
+    uint32_t fileLen = _platform->hostToNet32(getFileLength(ifs));
     char *buffer = new char[BUFFER_MAX];
 
-    send(socket,&fileLen,sizeof(uint32_t),0);
-    fileLen=htonl(fileLen);
+    _platform->sendTo(socket,&fileLen,sizeof(uint32_t),0);
+    fileLen=_platform->netToHost32(fileLen);    //?
 
     while (ifs)
     {
         ifs.read(buffer,BUFFER_MAX);
-        long realReadLen=ifs.gcount();
-        send(socket, buffer, (size_t) realReadLen, 0);
+        int realReadLen=(int)ifs.gcount();
+        _platform->sendTo(socket, buffer,realReadLen, 0);
     }
 
     ifs.close();
@@ -78,7 +86,7 @@ void TCPState::numToChar(long long num, char *buffer, int len) {
     int index=0;
     while(num!=0)
     {
-        buffer[index]=num%256;
+        buffer[index]=(char)(num%256);
         num=num>>8;
         ++index;
     }
@@ -90,15 +98,16 @@ long long TCPState::charToNum(char *buffer, int len) {
     while(index<len)
     {
         result+=buffer[index]*pow(256,index);
+        ++index;
     }
     return result;
 }
 
 uint32_t TCPState::recvUint32(int socket) {
     uint32_t result; // network zijiexu
-    ssize_t recvLen=recv(socket,&result,sizeof(result),0);
+    ssize_t recvLen=_platform->recvFrom(socket,&result,sizeof(result),0);
     assert(recvLen==sizeof(result));
-    return ntohl(result);
+    return _platform->netToHost32(result);
 }
 
 

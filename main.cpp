@@ -6,6 +6,8 @@ using namespace std;
 #include "TCPServer.h"
 #include "TCPClientFacade.h"
 #include <unistd.h>
+#include "LinuxSocket.h"
+
 #define PORT 6677
 
 int main() {
@@ -19,11 +21,20 @@ int main() {
         return 0;
     else if(childProcessID>0)
     {
-        usleep(1000);
-        TCPClientFacade client;
-        client.connectTo("127.0.0.1",PORT);
-        client.recvFile("1.txt");
-        client.recvFile("2.txt");
+        if(fork()==0)
+        {
+            usleep(1000);
+            TCPClientFacade client;
+            client.connectTo("127.0.0.1",PORT);
+            client.recvFile("2.txt");
+        }
+        else
+        {
+            usleep(1000);
+            TCPClientFacade client;
+            client.connectTo("127.0.0.1",PORT);
+            client.recvFile("3.txt");
+        }
     }
     else
     {

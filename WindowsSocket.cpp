@@ -10,7 +10,6 @@
 #include <iostream>
 #include <winsock2.h>
 #include <WS2tcpip.h>
-#define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #pragma comment(lib,"ws2_32.lib")
 

@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include <vector>
 #include "TCPServerState.h"
 #include "TCPConnection.h"
 
@@ -31,7 +32,7 @@ private:
     std::string _serverStringAddr;
     int _serverPort;
 
-    TCPConnection *_connection;
+    std::vector<TCPConnection *>_connections;
 
     TCPServerState *_state;
 };

@@ -2,12 +2,14 @@
 // Created by zpb on 16-8-4.
 //
 
+#include "PlatformSocket.h"
+
+
 #ifdef __LINUX__
 
 #ifndef FILETRANSPORT_LINUXSOCKET_H
 #define FILETRANSPORT_LINUXSOCKET_H
 
-#include "PlatformSocket.h"
 
 class LinuxSocket :public PlatformSocket{
 public:
@@ -21,7 +23,7 @@ public:
 
     int listenOn(int socket, int backlog) override;
 
-    int acceptFrom(int socket, const struct sockaddr *addr, int *addrLen) override;
+    int acceptFrom(int socket, struct sockaddr *addr, int *addrLen) override;
 
     int sendTo(int socket, void *buffer, int len, int flags) override;
 
@@ -41,7 +43,7 @@ public:
 
     unsigned getAddrNum(const char *ip) override;
 
-    const char *getAddrStr(unsigned int in) override;
+    std::string getAddrStr(unsigned int in) override;
 };
 
 
