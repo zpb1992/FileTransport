@@ -3,11 +3,8 @@
 //
 
 #include "TCPClient.h"
-#include <arpa/inet.h>
-#include <string.h>
 #include "TCPClientClosedState.h"
 #include "TCPClientEstablishedState.h"
-#include <unistd.h>
 #include <iostream>
 
 void TCPClient::createSocket(int domain, int type, int protocol) {

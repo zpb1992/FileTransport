@@ -3,11 +3,6 @@
 //
 
 #include "TCPClientEstablishedState.h"
-#include <sys/socket.h>
-#include <iostream>
-#include <fstream>
-#include <netinet/in.h>
-#include <unistd.h>
 
 
 int TCPClientEstablishedState::createSocket(int domain, int type, int protocol) {

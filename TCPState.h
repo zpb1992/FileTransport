@@ -7,6 +7,8 @@
 
 #include "PlatformSocket.h"
 #include <fstream>
+#include "LinuxSocket.h"
+#include "WindowsSocket.h"
 
 #define BUFFER_MAX 1000
 

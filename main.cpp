@@ -5,7 +5,6 @@ using namespace std;
 
 #include "TCPServer.h"
 #include "TCPClientFacade.h"
-#include <unistd.h>
 #include "LinuxSocket.h"
 
 #define PORT 6677

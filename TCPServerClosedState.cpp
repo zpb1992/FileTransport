@@ -3,10 +3,6 @@
 //
 
 #include "TCPServerClosedState.h"
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <iostream>
 
 int TCPServerClosedState::createSocket(int domain, int type, int protocol) {
     return socket(domain,type,protocol);

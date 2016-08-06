@@ -1,12 +1,6 @@
 //
 // Created by zpb on 16-8-3.
 //
-
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <iostream>
-#include <unistd.h>
 #include "TCPServerListenState.h"
 
 int TCPServerListenState::createSocket(int domain, int type, int protocol) {

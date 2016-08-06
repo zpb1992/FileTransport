@@ -2,10 +2,7 @@
 // Created by zpb on 16-8-1.
 //
 
-#include <sys/socket.h>
 #include "TCPClientClosedState.h"
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include <iostream>
 
 int TCPClientClosedState::createSocket(int domain, int type, int protocol) {

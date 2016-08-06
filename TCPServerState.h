@@ -6,8 +6,6 @@
 #define FILETRANSPORT_TCPSERVERSTATE_H
 
 #include "TCPState.h"
-#include <sys/types.h>
-#include <sys/socket.h>
 
 class TCPServerState :public TCPState{
 public:

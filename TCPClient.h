@@ -6,7 +6,6 @@
 #define FILETRANSPORT_TCPCLIENT_H
 
 #include <string>
-#include <netinet/in.h>
 #include "TCPClientState.h"
 
 

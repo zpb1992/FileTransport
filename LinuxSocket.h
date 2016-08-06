@@ -10,6 +10,12 @@
 #ifndef FILETRANSPORT_LINUXSOCKET_H
 #define FILETRANSPORT_LINUXSOCKET_H
 
+#include <sys/socket.h>
+#include <unistd.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <iostream>
+
 
 class LinuxSocket :public PlatformSocket{
 public:

@@ -6,12 +6,6 @@
 
 #ifdef __LINUX__
 
-#include <sys/socket.h>
-#include <unistd.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <iostream>
-
 int LinuxSocket::init() {
     return 0;
 }

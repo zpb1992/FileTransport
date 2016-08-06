@@ -9,6 +9,10 @@
 #ifndef FILETRANSPORT_WINDOWSSOCKET_H
 #define FILETRANSPORT_WINDOWSSOCKET_H
 
+#include <iostream>
+#include <winsock2.h>
+#include <WS2tcpip.h>
+
 class WindowsSocket :public PlatformSocket{
 public:
     int init() override ;

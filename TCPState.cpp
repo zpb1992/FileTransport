@@ -5,8 +5,7 @@
 #include <cmath>
 #include <cassert>
 #include "TCPState.h"
-#include "LinuxSocket.h"
-#include "WindowsSocket.h"
+
 
 #if (defined(__LINUX__))
 PlatformSocket *TCPState::_platform=new LinuxSocket();
