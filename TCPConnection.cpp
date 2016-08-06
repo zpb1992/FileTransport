@@ -32,13 +32,15 @@ void TCPConnection::closeConnection() {
 
 void *TCPConnection::newThread(void *arg) {
     // TO DO
-    //_thisObj->sendTo(_thisObj->_file);
+    TCPConnection *_thisObj=(TCPConnection *)arg;
 
+    _thisObj->sendTo("data.txt");
+    _thisObj->sendTo("test2.txt");
     return nullptr;
 }
 
 void TCPConnection::createThread() {
-    pthread_create(&_threadID, nullptr,newThread,nullptr);
+    pthread_create(&_threadID, nullptr,newThread,this);
 }
 
 

@@ -9,11 +9,11 @@
 #include "TCPState.h"
 
 ssize_t TCPState::recvFrom(int socket, void *data, int len) {
-    return recv(socket,data,len,0);
+    return _platform->recvFrom(socket,data,len,0);
 }
 
 ssize_t TCPState::sendTo(int socket, void *data, int len) {
-    return send(socket, data, len, 0);
+    return _platform->sendTo(socket, data, len, 0);
 }
 
 int TCPState::recvFile(int socket, std::string file) {
@@ -26,7 +26,7 @@ int TCPState::recvFile(int socket, std::string file) {
     while(recvedLen<fileLen)
     {
         uint32_t tempBufLen=BUFFER_MAX<(fileLen-recvedLen)?BUFFER_MAX:(fileLen-recvedLen);
-        recvedLen+=recv(socket,buffer,tempBufLen,0);
+        recvedLen+=_platform->recvFrom(socket,buffer,tempBufLen,0);
 
         ofs.write(buffer,recvedLen);
     }

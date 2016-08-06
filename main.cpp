@@ -22,7 +22,8 @@ int main() {
         usleep(1000);
         TCPClientFacade client;
         client.connectTo("127.0.0.1",PORT);
-        client.recvFile("test2.txt");
+        client.recvFile("1.txt");
+        client.recvFile("2.txt");
     }
     else
     {

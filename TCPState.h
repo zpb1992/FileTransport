@@ -5,8 +5,9 @@
 #ifndef FILETRANSPORT_TCPSTATE_H
 #define FILETRANSPORT_TCPSTATE_H
 
-
+#include "PlatformSocket.h"
 #include <fstream>
+
 #define BUFFER_MAX 1000
 
 
@@ -28,6 +29,9 @@ protected:
     long long charToNum(char *buffer, int len);
 
     uint32_t recvUint32(int socket);
+
+protected:
+    PlatformSocket *_platform;
 };
 
 
