@@ -3,21 +3,13 @@
 //
 
 #include "TCPClientClosedState.h"
-#include <iostream>
 
 int TCPClientClosedState::createSocket(int domain, int type, int protocol) {
- return socket(domain,type,protocol);
+ return _platform->createSocket(domain,type,protocol);
 }
 
-int TCPClientClosedState::connectTo(int socket, std::string ip, int port, int domain) {
- struct sockaddr_in servAddr;
- if(domain==AF_INET)
- {
-  servAddr.sin_family=domain;
-  servAddr.sin_port=htons(port);
-  servAddr.sin_addr.s_addr=inet_addr(ip.c_str());
- }
- return connect(socket,(sockaddr*)&servAddr,sizeof(sockaddr_in));
+int TCPClientClosedState::connectTo(int socket, std::string ip, unsigned short port, int domain) {
+ return _platform->connectTo(socket,domain,ip,port);
 }
 
 

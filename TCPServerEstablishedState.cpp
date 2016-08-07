@@ -10,7 +10,7 @@ int TCPServerEstablishedState::createSocket(int domain, int type, int protocol) 
     return 0;
 }
 
-int TCPServerEstablishedState::bindTo(int socket, std::string ip, int port, int domain) {
+int TCPServerEstablishedState::bindTo(int socket, std::string ip, unsigned short port, int domain) {
     std::cout<<"server is established,can not bind"<<std::endl;
     return 0;
 }
@@ -20,7 +20,7 @@ int TCPServerEstablishedState::lisenTo(int socket, int backlog) {
     return 0;
 }
 
-int TCPServerEstablishedState::acceptConnect(int socket,std::string &addr,int &port) {
+int TCPServerEstablishedState::acceptConnect(int socket,std::string &addr,unsigned short &port) {
     std::cout<<"server is established,can not accept"<<std::endl;
     return 0;
 }
@@ -36,7 +36,7 @@ int TCPServerEstablishedState::sendTo(int socket, std::string file) {
 }
 
 int TCPServerEstablishedState::closeSocket(int socket) {
-    close(socket);
+    _platform->closeSocket(socket);
     return 0;
 }
 

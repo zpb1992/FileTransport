@@ -5,7 +5,7 @@
 #include "TCPServerClosedState.h"
 
 int TCPServerClosedState::createSocket(int domain, int type, int protocol) {
-    return socket(domain,type,protocol);
+    return _platform->createSocket(domain,type,protocol);
 }
 
 
@@ -24,21 +24,15 @@ int TCPServerClosedState::closeSocket(int socket) {
     return 0;
 }
 
-int TCPServerClosedState::bindTo(int socket, std::string ip, int port, int domain) {
-    struct sockaddr_in addr;
-    if(domain==AF_INET) {
-        addr.sin_family = AF_INET;
-        addr.sin_port = htons(port);
-        addr.sin_addr.s_addr = inet_addr(ip.c_str());
-    }
-    return bind(socket, (sockaddr *) &addr, sizeof(addr));
+int TCPServerClosedState::bindTo(int socket, std::string ip, unsigned short port, int domain) {
+    return _platform->bindTo(socket,domain,ip,port);
 }
 
 int TCPServerClosedState::lisenTo(int socket, int backlog) {
-    return listen(socket,backlog);
+    return _platform->listenOn(socket,backlog);
 }
 
-int TCPServerClosedState::acceptConnect(int socket,std::string &addr,int &port)
+int TCPServerClosedState::acceptConnect(int socket,std::string &addr, unsigned short &port)
 {
     std::cout<<"server is closed,can not accept"<<std::endl;
     return -1;

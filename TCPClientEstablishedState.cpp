@@ -10,7 +10,7 @@ int TCPClientEstablishedState::createSocket(int domain, int type, int protocol) 
     return -1;
 }
 
-int TCPClientEstablishedState::connectTo(int socket, std::string ip,int port,int domain) {
+int TCPClientEstablishedState::connectTo(int socket, std::string ip,unsigned short port,int domain) {
     std::cout << "TCP Client state is Established, can not connect" << std::endl;
     return -1;
 }
@@ -18,7 +18,7 @@ int TCPClientEstablishedState::connectTo(int socket, std::string ip,int port,int
 
 
 int TCPClientEstablishedState::closeSocket(int socket) {
-    close(socket);
+    _platform->closeSocket(socket);
     return 0;
 }
 

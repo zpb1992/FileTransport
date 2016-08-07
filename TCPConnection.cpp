@@ -4,6 +4,8 @@
 
 #include "TCPConnection.h"
 #include "TCPServerEstablishedState.h"
+#include "LinuxThread.h"
+#include "WindowsThread.h"
 
 TCPConnection::TCPConnection(int serverSocket) {
     _serverSocket=serverSocket;
@@ -39,7 +41,14 @@ void *TCPConnection::newThread(void *arg) {
 }
 
 void TCPConnection::createThread() {
-    pthread_create(&_threadID, nullptr,newThread,this);
+    PlatformThread *thread;
+#if defined(__LINUX__)
+    thread=new LinuxThread();
+#elif defined(__WINDOWS__)
+    thread=new WindowsThread();
+#endif
+    thread->createNewThread(newThread, this);
+
 }
 
 

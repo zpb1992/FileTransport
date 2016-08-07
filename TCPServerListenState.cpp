@@ -9,7 +9,7 @@ int TCPServerListenState::createSocket(int domain, int type, int protocol) {
     return 0;
 }
 
-int TCPServerListenState::bindTo(int socket, std::string ip, int port, int domain) {
+int TCPServerListenState::bindTo(int socket, std::string ip, unsigned short port, int domain) {
     std::cout<<"server is Listend,can not bind"<<std::endl;
     return 0;
 }
@@ -19,13 +19,13 @@ int TCPServerListenState::lisenTo(int socket, int backlog) {
     return 0;
 }
 
-int TCPServerListenState::acceptConnect(int socket,std::string &addr,int &port)
+int TCPServerListenState::acceptConnect(int socket,std::string &addr,unsigned short &port)
 {
     sockaddr_in peerAddr;
     int addrLen;
-    int conectedSocket=accept(socket, (sockaddr *) &peerAddr, (socklen_t *) &addrLen);
-    addr=inet_ntoa(peerAddr.sin_addr);
-    port=ntohs(peerAddr.sin_port);
+    int conectedSocket=_platform->acceptFrom(socket, AF_INET,addr,port);
+    addr=_platform->getAddrStr(peerAddr.sin_addr.s_addr);
+    port=_platform->netToHost16(peerAddr.sin_port);
 
     return conectedSocket;
 }

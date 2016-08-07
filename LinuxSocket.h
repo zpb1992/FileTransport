@@ -23,13 +23,13 @@ public:
 
     int createSocket(int domain, int type, int protocol) override;
 
-    int connectTo(int socket, const struct sockaddr *name, int namelen) override;
+    int connectTo(int socket, short family,std::string ip,unsigned short port) override;
 
-    int bindTo(int socket, const struct sockaddr *addr, int addrlen) override;
+    int bindTo(int socket, short family,std::string ip,unsigned short port) override;
 
     int listenOn(int socket, int backlog) override;
 
-    int acceptFrom(int socket, struct sockaddr *addr, int *addrLen) override;
+    int acceptFrom(int socket, int family,std::string &ip,unsigned short &port) override;
 
     int sendTo(int socket, void *buffer, int len, int flags) override;
 

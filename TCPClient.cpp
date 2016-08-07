@@ -5,7 +5,6 @@
 #include "TCPClient.h"
 #include "TCPClientClosedState.h"
 #include "TCPClientEstablishedState.h"
-#include <iostream>
 
 void TCPClient::createSocket(int domain, int type, int protocol) {
     _domain=domain;

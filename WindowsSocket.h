@@ -45,7 +45,7 @@ public:
 
     unsigned getAddrNum(const char *ip) override;
 
-    std::string getAddrStr(unsigned int in) override;
+    std::string getAddrStr(in_addr in) override;
 
 };
 

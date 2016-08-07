@@ -18,7 +18,7 @@ void TCPClientFacade::closeConnection() {
     delete _client;
 }
 
-void TCPClientFacade::connectTo(std::string ip, int port) {
+void TCPClientFacade::connectTo(std::string ip, unsigned short port) {
     _client->connect(ip,port);
 }
 

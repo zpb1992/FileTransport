@@ -11,11 +11,11 @@ class TCPServerState :public TCPState{
 public:
     virtual int createSocket(int domain, int type, int protocol) = 0;
 
-    virtual int bindTo(int socket,std::string ip,int port,int domain) =0 ;
+    virtual int bindTo(int socket,std::string ip,unsigned short port,int domain) =0 ;
 
     virtual int lisenTo(int socket, int backlog) = 0;
 
-    virtual int acceptConnect(int socket,std::string &addr,int &port) = 0;
+    virtual int acceptConnect(int socket,std::string &addr,unsigned short &port) = 0;
 
     virtual int receiveFrom(int socket,std::string file)=0;
 

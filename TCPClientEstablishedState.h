@@ -11,7 +11,7 @@ class TCPClientEstablishedState:public TCPClientState {
 public:
     int createSocket(int domain, int type, int protocol) override ;
 
-    int connectTo(int socket,std::string ip,int port,int domain) override ;
+    int connectTo(int socket,std::string ip,unsigned short port,int domain) override ;
 
     virtual int receiveFrom(int socket,std::string file) override ;
 

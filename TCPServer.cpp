@@ -32,7 +32,7 @@ void TCPServer::listenTo(int backlog) {
 
 void TCPServer::acceptConnection() {
     std::string clientIp;
-    int clientPort;
+    unsigned short clientPort;
     while(1)
     {
         int conectedSocket=_state->acceptConnect(_listenSocket,clientIp,clientPort);

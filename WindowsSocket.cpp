@@ -137,11 +137,9 @@ unsigned WindowsSocket::getAddrNum(const char *ip){
 	return result;
 }
 
-std::string WindowsSocket::getAddrStr(unsigned int in) {
-	in_addr tempAddr;
-	tempAddr.S_un.S_addr = in;
+std::string WindowsSocket::getAddrStr(in_addr in) {
 	char result[20];
-	if (inet_ntop(AF_INET, &in, result, sizeof(result)) == nullptr)
+	if (inet_ntop(AF_INET, &in.S_un.S_addr, result, sizeof(result)) == nullptr)
 	{
 		std::cout << "windows socket inet_ntop failed" << std::endl;
 		return "";

@@ -10,7 +10,7 @@
 class TCPServerFacade {
 public:
     TCPServerFacade();
-    void waitConnect(int port,std::string ip="0.0.0.0");
+    void waitConnect(unsigned short port,std::string ip="0.0.0.0");
     void closeConnection();
 
 private:

@@ -18,22 +18,22 @@ int main() {
     int childProcessID=fork();
     if(childProcessID<0)
         return 0;
-    else if(childProcessID>0)
+    else if(childProcessID==0)
     {
-        if(fork()==0)
-        {
+        //if(fork()==0)
+        //{
             usleep(1000);
             TCPClientFacade client;
             client.connectTo("127.0.0.1",PORT);
             client.recvFile("2.txt");
-        }
+        /*}
         else
         {
             usleep(1000);
             TCPClientFacade client;
             client.connectTo("127.0.0.1",PORT);
             client.recvFile("3.txt");
-        }
+        }*/
     }
     else
     {

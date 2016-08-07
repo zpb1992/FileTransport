@@ -11,11 +11,11 @@ class TCPServerClosedState :public TCPServerState{
 public:
     int createSocket(int domain, int type, int protocol) override ;
 
-    int bindTo(int socket,std::string ip,int port,int domain) override ;
+    int bindTo(int socket,std::string ip,unsigned short port,int domain) override ;
 
     int lisenTo(int socket,int backlog) override ;
 
-    int acceptConnect(int socket,std::string &ip,int &port) override ;
+    int acceptConnect(int socket,std::string &ip,unsigned short &port) override ;
 
     int receiveFrom(int socket,std::string file) override ;
 

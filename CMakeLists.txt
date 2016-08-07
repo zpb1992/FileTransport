@@ -3,7 +3,7 @@ project(FileTransport)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp TCPClient.cpp TCPClient.h TCPServer.cpp TCPServer.h TCPState.cpp TCPState.h TCPClientState.cpp TCPClientState.h TCPServerState.cpp TCPServerState.h TCPClientClosedState.cpp TCPClientClosedState.h TCPClientEstablishedState.cpp TCPClientEstablishedState.h TCPClient.cpp TCPClient.h TCPServerClosedState.cpp TCPServerClosedState.h TCPServerEstablishedState.cpp TCPServerEstablishedState.h TCPServerListenState.cpp TCPServerListenState.h TCPServer.cpp TCPServer.h TCPConnection.cpp TCPConnection.h TCPClientFacade.cpp TCPClientFacade.h TCPServerFacade.cpp TCPServerFacade.h PlatformSocket.cpp PlatformSocket.h WindowsSocket.cpp WindowsSocket.h LinuxSocket.cpp LinuxSocket.h)
+set(SOURCE_FILES main.cpp TCPClient.cpp TCPClient.h TCPServer.cpp TCPServer.h TCPState.cpp TCPState.h TCPClientState.cpp TCPClientState.h TCPServerState.cpp TCPServerState.h TCPClientClosedState.cpp TCPClientClosedState.h TCPClientEstablishedState.cpp TCPClientEstablishedState.h TCPClient.cpp TCPClient.h TCPServerClosedState.cpp TCPServerClosedState.h TCPServerEstablishedState.cpp TCPServerEstablishedState.h TCPServerListenState.cpp TCPServerListenState.h TCPServer.cpp TCPServer.h TCPConnection.cpp TCPConnection.h TCPClientFacade.cpp TCPClientFacade.h TCPServerFacade.cpp TCPServerFacade.h PlatformSocket.cpp PlatformSocket.h WindowsSocket.cpp WindowsSocket.h LinuxSocket.cpp LinuxSocket.h PlatformThread.cpp PlatformThread.h Platform.h LinuxThread.cpp LinuxThread.h WindowsThread.cpp WindowsThread.h)
 
 add_executable(FileTransport ${SOURCE_FILES})
 

@@ -12,11 +12,11 @@ class TCPServerListenState :public TCPServerState{
 public:
     int createSocket(int domain, int type, int protocol) override ;
 
-    int bindTo(int socket,std::string ip,int port,int domain) override ;
+    int bindTo(int socket,std::string ip,unsigned short port,int domain) override ;
 
     int lisenTo(int socket,int backlog) override ;
 
-    virtual int acceptConnect(int socket,std::string &addr,int &port) override ;
+    virtual int acceptConnect(int socket,std::string &addr,unsigned short &port) override ;
 
     int receiveFrom(int socket,std::string file) override ;
 

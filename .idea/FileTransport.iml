@@ -6,26 +6,33 @@
       <sourceFolder url="file://$MODULE_DIR$/TCPServerState.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPClientState.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPClientClosedState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TCPClientEstablishedState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/LinuxThread.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPClientEstablishedState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/PlatformThread.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServer.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServerFacade.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServerEstablishedState.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TCPClientEstablishedState.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TCPClientFacade.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServerState.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/WindowsSocket.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPClient.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPState.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServerListenState.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TCPState.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/WindowsThread.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPClientClosedState.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServerEstablishedState.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPConnection.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServerClosedState.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPConnection.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/LinuxSocket.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/PlatformThread.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPClient.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/WindowsThread.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Platform.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/LinuxThread.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServerClosedState.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/PlatformSocket.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServerListenState.h" isTestSource="false" />
@@ -34,7 +41,7 @@
       <sourceFolder url="file://$MODULE_DIR$/WindowsSocket.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPServerFacade.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPClientState.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/TCPClientFacade.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/TCPState.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/TCPClientFacade.h" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />

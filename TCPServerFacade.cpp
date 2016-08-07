@@ -9,7 +9,7 @@ TCPServerFacade::TCPServerFacade() {
     _server->createSocket(AF_INET,SOCK_STREAM,0);
 }
 
-void TCPServerFacade::waitConnect(int port, std::string ip) {
+void TCPServerFacade::waitConnect(unsigned short port, std::string ip) {
     _server->bindAddr(ip,port);
     _server->listenTo(1);
     _server->acceptConnection();

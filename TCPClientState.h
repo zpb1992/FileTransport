@@ -12,7 +12,7 @@ class TCPClientState : public TCPState {
 public:
     virtual int createSocket(int domain, int type, int protocol) = 0;
 
-    virtual int connectTo(int socket,std::string ip,int port,int domain) = 0;
+    virtual int connectTo(int socket,std::string ip,unsigned short port,int domain) = 0;
 
     virtual int receiveFrom(int socket,std::string file)=0;
 

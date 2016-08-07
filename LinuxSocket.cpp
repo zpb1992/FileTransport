@@ -20,22 +20,44 @@ int LinuxSocket::createSocket(int domain, int type, int protocol) {
     return result;
 }
 
-int LinuxSocket::connectTo(int socket, const struct sockaddr *name, int namelen) {
-    if(connect(socket,name,namelen)==-1)
+int LinuxSocket::connectTo(int socket, short family,std::string ip,unsigned short port) {
+    int result=-1;
+    if(family==AF_INET)
+    {
+        struct sockaddr_in sock_in;
+        sock_in.sin_family=family;
+        sock_in.sin_port=hostToNet16(port);
+        sock_in.sin_addr.s_addr=inet_addr(ip.c_str());
+        result=connect(socket,(sockaddr *)&sock_in,sizeof(sockaddr_in));
+    }
+
+    if(result==-1)
     {
         std::cout<<"linux socket connect failed"<<std::endl;
         return -1;
     }
-    return 0;
+    return result;
 }
 
-int LinuxSocket::bindTo(int socket, const struct sockaddr *addr, int addrlen) {
-    if(bind(socket,addr,addrlen)==-1)
+int LinuxSocket::bindTo(int socket, short family,std::string ip,unsigned short port) {
+
+    int result=-1;
+    if(family==AF_INET)
+    {
+        struct sockaddr_in sock_in;
+        sock_in.sin_family=family;
+        sock_in.sin_port=hostToNet16(port);
+        sock_in.sin_addr.s_addr=inet_addr(ip.c_str());
+
+        result=bind(socket,(sockaddr *)&sock_in,sizeof(sockaddr_in));
+    }
+
+    if(result==-1)
     {
         std::cout<<"linux socket bind failed"<<std::endl;
         return -1;
     }
-    return 0;
+    return result;
 }
 
 int LinuxSocket::listenOn(int socket, int backlog) {
@@ -47,13 +69,27 @@ int LinuxSocket::listenOn(int socket, int backlog) {
     return 0;
 }
 
-int LinuxSocket::acceptFrom(int socket, struct sockaddr *addr, int *addrLen) {
-    if(accept(socket,addr,(socklen_t *)addrLen)==-1)
+int LinuxSocket::acceptFrom(int socket, int family,std::string &ip,unsigned short &port) {
+    int result=-1;
+    if(family==AF_INET)
+    {
+        struct sockaddr_in sock_in;
+        int sockLen;
+        sock_in.sin_family=family;
+        sock_in.sin_port=hostToNet16(port);
+        sock_in.sin_addr.s_addr=inet_addr(ip.c_str());
+
+        result=accept(socket,(sockaddr *)&sock_in,(socklen_t *)&sockLen);
+        ip=inet_ntoa(sock_in.sin_addr);
+        port=ntohs(sock_in.sin_port);
+    }
+
+    if(result==-1)
     {
         std::cout<<"linux socket accept failed"<<std::endl;
         return -1;
     }
-    return 0;
+    return result;
 }
 
 int LinuxSocket::sendTo(int socket, void *buffer, int len, int flags) {
@@ -110,9 +146,9 @@ unsigned LinuxSocket::getAddrNum(const char *ip){
 }
 
 std::string LinuxSocket::getAddrStr(unsigned int in) {
-    in_addr addr;
-    addr.s_addr=in;
-    return inet_ntoa(addr);
+    in_addr temp;
+    temp.s_addr=in;
+    return inet_ntoa(temp);
 }
 
 #endif

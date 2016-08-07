@@ -11,7 +11,7 @@
 class TCPClientFacade {
 public:
     TCPClientFacade();
-    void connectTo(std::string ip,int port);
+    void connectTo(std::string ip,unsigned short port);
     void sendFile(std::string file);
     void recvFile(std::string file);
     void closeConnection();
