@@ -8,9 +8,8 @@
 #include "Platform.h"
 
 
-
 class PlatformThread {
-protected:
+public:
 #if defined __WINDOWS__
 	typedef unsigned int(_stdcall *threadFunc)(void *);
 #elif defined __LINUX__

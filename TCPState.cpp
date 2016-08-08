@@ -35,7 +35,7 @@ int TCPState::sendTo(int socket, void *data, int len) {
 }
 
 int TCPState::recvFile(int socket, std::string file) {
-    std::ofstream ofs(file,std::ofstream::trunc);
+    std::ofstream ofs(file,std::ios_base::binary|std::ofstream::trunc);
     char *buffer=new char[BUFFER_MAX];
 
     unsigned fileLen=recvUint32(socket);
@@ -56,7 +56,7 @@ int TCPState::recvFile(int socket, std::string file) {
 }
 
 int TCPState::sendFile(int socket, std::string file) {
-    std::ifstream ifs(file);
+    std::ifstream ifs(file,std::ios_base::binary);
     unsigned fileLen = _platform->hostToNet32(getFileLength(ifs));
     char *buffer = new char[BUFFER_MAX];
 

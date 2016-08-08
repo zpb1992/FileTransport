@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <io.h>
 using namespace std;
 
 #include "TCPServer.h"
@@ -23,8 +23,10 @@ int main() {
 	server.listenTo(10);
 	server.acceptConnection();
 	server.cleanup();*/
+
 	TCPServerFacade f;
 	f.waitConnect(PORT);
+
 
     return 0;
 }

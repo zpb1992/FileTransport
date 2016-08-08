@@ -4,8 +4,9 @@
 
 #include "TCPConnection.h"
 #include "TCPServerEstablishedState.h"
-#include "LinuxThread.h"
+#include "PlatformThread.h"
 #include "WindowsThread.h"
+#include "LinuxThread.h"
 
 TCPConnection::TCPConnection(int serverSocket) {
     _serverSocket=serverSocket;
@@ -58,7 +59,7 @@ void TCPConnection::createThread() {
 #elif defined(__WINDOWS__)
     thread=new WindowsThread();
 #endif
-    thread->createNewThread((unsigned int(_stdcall *)(void *))*newThread, this);
+    thread->createNewThread((PlatformThread::threadFunc)*newThread, this);
 	_threadID=thread->getThreadID();
 
 }
