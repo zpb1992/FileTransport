@@ -1,9 +1,12 @@
 *
 
-!*/*.h
-!*/*.cpp
+!connect/
+!facade/
+!platform/
+!state/
+
 !*.h
 !*.cpp
 !.git
 !.gitignore
-!*CMakeLists.txt
+!CMakeLists.txt
