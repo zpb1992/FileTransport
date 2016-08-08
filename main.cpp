@@ -1,5 +1,4 @@
 #include <iostream>
-#include <io.h>
 using namespace std;
 
 #include "TCPServer.h"
@@ -10,22 +9,25 @@ using namespace std;
 #define PORT 6677
 
 int main() {
-            //usleep(1000);
-            //TCPClientFacade client;
-            //client.connectTo("127.0.0.1",PORT);
-            //client.recvFile("2.txt");
+    chdir("/home/zpb/ClionProjects/FileTransport");
+
+	if(fork()>0)
+	{
+		usleep(1000);
+		TCPClientFacade client;
+		client.connectTo("127.0.0.1",PORT);
+		client.recvFile("2.txt");
+	}
+	else{
 
 
-	/*TCPServer server;
-	server.init();
-	server.createSocket(AF_INET,SOCK_STREAM,0);
-	server.bindAddr("0.0.0.0",PORT);
-	server.listenTo(10);
-	server.acceptConnection();
-	server.cleanup();*/
+		TCPServerFacade f;
+		f.waitConnect(PORT);
+	}
 
-	TCPServerFacade f;
-	f.waitConnect(PORT);
+
+
+
 
 
     return 0;
