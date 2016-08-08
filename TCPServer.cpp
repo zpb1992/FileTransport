@@ -7,6 +7,15 @@
 #include "TCPServerClosedState.h"
 #include "TCPServerListenState.h"
 
+
+TCPServer::TCPServer() {
+	_state=new TCPServerClosedState();
+}
+
+void TCPServer::init()
+{
+	_state->init();
+}
 void TCPServer::createSocket(int domain, int type, int protocol) {
     _domain=domain;
     _type=type;
@@ -52,12 +61,11 @@ void TCPServer::close() {
     _connections.clear();
 }
 
-TCPServer::TCPServer() {
-    _state=new TCPServerClosedState();
+
+void TCPServer::cleanup()
+{
+	_state->cleanup();
 }
-
-
-
 
 
 

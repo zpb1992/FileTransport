@@ -32,6 +32,7 @@ void TCPConnection::closeConnection() {
     _state->closeSocket(_serverSocket);
 }
 
+#if defined __LINUX__
 void *TCPConnection::newThread(void *arg) {
     // TO DO
     TCPConnection *_thisObj=(TCPConnection *)arg;
@@ -39,6 +40,16 @@ void *TCPConnection::newThread(void *arg) {
     _thisObj->sendTo("1.txt");
     return nullptr;
 }
+#elif defined __WINDOWS__
+unsigned int TCPConnection::newThread(void *arg) {
+	// TO DO
+	TCPConnection *_thisObj=(TCPConnection *)arg;
+
+		_thisObj->sendTo("1.txt");
+	return 0;
+}
+#endif
+
 
 void TCPConnection::createThread() {
     PlatformThread *thread;
@@ -47,7 +58,8 @@ void TCPConnection::createThread() {
 #elif defined(__WINDOWS__)
     thread=new WindowsThread();
 #endif
-    thread->createNewThread(newThread, this);
+    thread->createNewThread((unsigned int(_stdcall *)(void *))*newThread, this);
+	_threadID=thread->getThreadID();
 
 }
 

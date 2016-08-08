@@ -12,11 +12,13 @@
 class TCPClient {
 public:
     TCPClient();
+	void init();
     void createSocket(int domain,int type,int protocol);
     void connect(std::string ip,int port);
     void send(std::string file);
     void recv(std::string file);
     void closeSocket();
+	void cleanup();
 
 
 private:

@@ -1,49 +1,30 @@
 #include <iostream>
-#include <unistd.h>
 
 using namespace std;
 
 #include "TCPServer.h"
 #include "TCPClientFacade.h"
+#include "TCPServerFacade.h"
 #include "LinuxSocket.h"
 
 #define PORT 6677
 
 int main() {
+            //usleep(1000);
+            //TCPClientFacade client;
+            //client.connectTo("127.0.0.1",PORT);
+            //client.recvFile("2.txt");
 
-    std::cout<<get_current_dir_name()<<std::endl;
-    chdir("/home/zpb/ClionProjects/FileTransport");
-    std::cout<<get_current_dir_name()<<std::endl;
 
-    int childProcessID=fork();
-    if(childProcessID<0)
-        return 0;
-    else if(childProcessID==0)
-    {
-        //if(fork()==0)
-        //{
-            usleep(1000);
-            TCPClientFacade client;
-            client.connectTo("127.0.0.1",PORT);
-            client.recvFile("2.txt");
-        /*}
-        else
-        {
-            usleep(1000);
-            TCPClientFacade client;
-            client.connectTo("127.0.0.1",PORT);
-            client.recvFile("3.txt");
-        }*/
-    }
-    else
-    {
-        TCPServer server;
-        server.createSocket(AF_INET,SOCK_STREAM,0);
-        server.bindAddr("0.0.0.0",PORT);
-        server.listenTo(10);
-        server.acceptConnection();
-    }
-
+	/*TCPServer server;
+	server.init();
+	server.createSocket(AF_INET,SOCK_STREAM,0);
+	server.bindAddr("0.0.0.0",PORT);
+	server.listenTo(10);
+	server.acceptConnection();
+	server.cleanup();*/
+	TCPServerFacade f;
+	f.waitConnect(PORT);
 
     return 0;
 }

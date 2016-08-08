@@ -21,12 +21,8 @@ int TCPServerListenState::lisenTo(int socket, int backlog) {
 
 int TCPServerListenState::acceptConnect(int socket,std::string &addr,unsigned short &port)
 {
-    sockaddr_in peerAddr;
-    int addrLen;
-    int conectedSocket=_platform->acceptFrom(socket, AF_INET,addr,port);
-    addr=_platform->getAddrStr(peerAddr.sin_addr.s_addr);
-    port=_platform->netToHost16(peerAddr.sin_port);
 
+    int conectedSocket=_platform->acceptFrom(socket, AF_INET,addr,port);
     return conectedSocket;
 }
 
@@ -41,7 +37,7 @@ int TCPServerListenState::sendTo(int socket, std::string file) {
 }
 
 int TCPServerListenState::closeSocket(int socket) {
-    close(socket);
+    _platform->closeSocket(socket);
     return 0;
 }
 

@@ -15,11 +15,22 @@ PlatformSocket *TCPState::_platform=new WindowsSocket();
 PlatformSocket *TCPState::_platform=nullptr;
 #endif
 
-ssize_t TCPState::recvFrom(int socket, void *data, int len) {
+void TCPState::init()
+{
+	_platform->init();
+}
+
+void TCPState::cleanup()
+{
+	_platform->cleanup();
+}
+
+
+int TCPState::recvFrom(int socket, void *data, int len) {
     return _platform->recvFrom(socket,data,len,0);
 }
 
-ssize_t TCPState::sendTo(int socket, void *data, int len) {
+int TCPState::sendTo(int socket, void *data, int len) {
     return _platform->sendTo(socket, data, len, 0);
 }
 
@@ -27,12 +38,12 @@ int TCPState::recvFile(int socket, std::string file) {
     std::ofstream ofs(file,std::ofstream::trunc);
     char *buffer=new char[BUFFER_MAX];
 
-    uint32_t fileLen=recvUint32(socket);
+    unsigned fileLen=recvUint32(socket);
 
-    uint32_t recvedLen=0;
+    unsigned recvedLen=0;
     while(recvedLen<fileLen)
     {
-        uint32_t tempBufLen=BUFFER_MAX<(fileLen-recvedLen)?BUFFER_MAX:(fileLen-recvedLen);
+        unsigned tempBufLen=BUFFER_MAX<(fileLen-recvedLen)?BUFFER_MAX:(fileLen-recvedLen);
         recvedLen+=_platform->recvFrom(socket,buffer,tempBufLen,0);
 
         ofs.write(buffer,recvedLen);
@@ -46,10 +57,10 @@ int TCPState::recvFile(int socket, std::string file) {
 
 int TCPState::sendFile(int socket, std::string file) {
     std::ifstream ifs(file);
-    uint32_t fileLen = _platform->hostToNet32(getFileLength(ifs));
+    unsigned fileLen = _platform->hostToNet32(getFileLength(ifs));
     char *buffer = new char[BUFFER_MAX];
 
-    _platform->sendTo(socket,&fileLen,sizeof(uint32_t),0);
+    _platform->sendTo(socket,&fileLen,sizeof(unsigned),0);
     fileLen=_platform->netToHost32(fileLen);    //?
 
     while (ifs)
@@ -64,11 +75,11 @@ int TCPState::sendFile(int socket, std::string file) {
     return fileLen;
 }
 
-uint32_t TCPState::getFileLength(std::ifstream &ifs) {
+unsigned TCPState::getFileLength(std::ifstream &ifs) {
     assert(ifs);
-    uint32_t result;
+    unsigned result;
     ifs.seekg(0, std::ios_base::end);
-    result= (uint32_t) ifs.tellg();
+    result= (unsigned) ifs.tellg();
     ifs.seekg(0,std::ios_base::beg);
     return result;
 }
@@ -102,9 +113,9 @@ long long TCPState::charToNum(char *buffer, int len) {
     return result;
 }
 
-uint32_t TCPState::recvUint32(int socket) {
-    uint32_t result; // network zijiexu
-    ssize_t recvLen=_platform->recvFrom(socket,&result,sizeof(result),0);
+unsigned TCPState::recvUint32(int socket) {
+    unsigned result; // network zijiexu
+    int recvLen=_platform->recvFrom(socket,&result,sizeof(result),0);
     assert(recvLen==sizeof(result));
     return _platform->netToHost32(result);
 }

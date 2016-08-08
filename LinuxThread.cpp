@@ -5,9 +5,9 @@
 
 #ifdef __LINUX__
 
-#include <pthread.h>
 
-void LinuxThread::createNewThread(void *(*func)(void *), void *arg) {
+
+void LinuxThread::createNewThread(threadFunc func, void *arg) {
     pthread_create(&_threadID,nullptr,func,arg);
 }
 

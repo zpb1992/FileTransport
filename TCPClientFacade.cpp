@@ -6,6 +6,7 @@
 
 TCPClientFacade::TCPClientFacade() {
     _client=new TCPClient();
+	_client->init();
     _client->createSocket(AF_INET,SOCK_STREAM,0);
 }
 
@@ -15,6 +16,7 @@ void TCPClientFacade::sendFile(std::string file) {
 
 void TCPClientFacade::closeConnection() {
     _client->closeSocket();
+	_client->cleanup();
     delete _client;
 }
 

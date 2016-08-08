@@ -7,9 +7,18 @@
 
 #include "Platform.h"
 
+
+
 class PlatformThread {
+protected:
+#if defined __WINDOWS__
+	typedef unsigned int(_stdcall *threadFunc)(void *);
+#elif defined __LINUX__
+	typedef void *(* threadFunc)(void *);
+#endif
+
 public:
-    virtual void createNewThread(void *(*func)(void *),void *arg)=0;
+    virtual void createNewThread(threadFunc,void *arg)=0;
     virtual unsigned long getThreadID()=0;
 
 protected:

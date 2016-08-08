@@ -6,6 +6,11 @@
 #include "TCPClientClosedState.h"
 #include "TCPClientEstablishedState.h"
 
+void TCPClient::init()
+{
+	_state->init();
+}
+
 void TCPClient::createSocket(int domain, int type, int protocol) {
     _domain=domain;
     _type=type;
@@ -54,6 +59,11 @@ void TCPClient::recv(std::string file) {
         std::cout<<"Client recv error"<<std::endl;
         exit(1);
     }
+}
+
+void TCPClient::cleanup()
+{
+	_state->cleanup();
 }
 
 TCPClient::TCPClient() {

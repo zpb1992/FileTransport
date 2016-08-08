@@ -7,7 +7,6 @@
 
 #include <string>
 #include "TCPServerState.h"
-#include <pthread.h>
 
 class TCPConnection {
 public:
@@ -18,14 +17,19 @@ public:
     void closeConnection();
 
     void createThread();
+
+#if defined __LINUX__
     static void *newThread(void *arg);
+#elif defined __WINDOWS__
+	static unsigned int newThread(void *arg);
+#endif
 
 private:
     int _serverSocket;
     std::string _clientIp;
     int _clientPort;
 
-    pthread_t _threadID;
+    unsigned long _threadID;
     std::string _file;
 
     TCPServerState *_state;

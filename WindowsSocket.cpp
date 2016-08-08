@@ -8,7 +8,6 @@
 
 #include "WindowsSocket.h"
 
-
 #pragma comment(lib,"ws2_32.lib")
 
 int WindowsSocket::init() {
@@ -31,24 +30,43 @@ int WindowsSocket::createSocket(int domain, int type, int protocol) {
     return sock;
 }
 
-int WindowsSocket::connectTo(int socket, const struct sockaddr *name, int namelen) {
-    int result=connect(socket,name,namelen);
-    if(result==SOCKET_ERROR)
-    {
-        std::cout<<"windows socket connect failed"<<std::endl;
-        return -1;
-    }
-    return 0;
+int WindowsSocket::connectTo(int socket, short family,std::string ip,unsigned short port) {
+	int result=-1;
+	if(family==AF_INET)
+	{
+		struct sockaddr_in sock_in;
+		sock_in.sin_family=family;
+		sock_in.sin_port=hostToNet16(port);
+		sock_in.sin_addr.S_un.S_addr=inet_addr(ip.c_str());
+		result=connect(socket,(sockaddr *)&sock_in,sizeof(sockaddr_in));
+	}
+
+	if(result==-1)
+	{
+		std::cout<<"windows socket connect failed"<<std::endl;
+		return -1;
+	}
+	return result;
 }
 
-int WindowsSocket::bindTo(int socket, const struct sockaddr *addr, int addrlen) {
-    int result=bind(socket,addr,addrlen);
-    if(result!=0)
-    {
-        std::cout<<"windows socket bind failed"<<std::endl;
-        return -1;
-    }
-    return 0;
+int WindowsSocket::bindTo(int socket, short family,std::string ip,unsigned short port) {
+	int result=-1;
+	if(family==AF_INET)
+	{
+		struct sockaddr_in sock_in;
+		sock_in.sin_family=family;
+		sock_in.sin_port=hostToNet16(port);
+		sock_in.sin_addr.S_un.S_addr=inet_addr(ip.c_str());
+
+		result=bind(socket,(sockaddr *)&sock_in,sizeof(sockaddr_in));
+	}
+
+	if(result==-1)
+	{
+		std::cout<<"windows socket bind failed"<<std::endl;
+		return -1;
+	}
+	return result;
 }
 
 int WindowsSocket::listenOn(int socket, int backlog) {
@@ -61,14 +79,24 @@ int WindowsSocket::listenOn(int socket, int backlog) {
     return 0;
 }
 
-int WindowsSocket::acceptFrom(int socket, struct sockaddr *addr, int *addrLen) {
-    int connectSock=accept(socket,addr,addrLen);
-    if(connectSock==INVALID_SOCKET)
-    {
-        std::cout<<"windows socket accept failed"<<std::endl;
-        return -1;
-    }
-    return connectSock;
+int WindowsSocket::acceptFrom(int socket, int family,std::string &ip,unsigned short &port) {
+	int result=-1;
+	if(family==AF_INET)
+	{
+		struct sockaddr_in sock_in;
+		int sockLen=sizeof(sock_in);
+
+		result=accept(socket,(sockaddr *)&sock_in,(socklen_t *)&sockLen);
+		ip=inet_ntoa(sock_in.sin_addr);
+		port=ntohs(sock_in.sin_port);
+	}
+
+	if(result==-1)
+	{
+		std::cout<<"linux socket accept failed"<<std::endl;
+		return -1;
+	}
+	return result;
 }
 
 int WindowsSocket::sendTo(int socket, void *buffer, int len, int flags) {
@@ -137,9 +165,12 @@ unsigned WindowsSocket::getAddrNum(const char *ip){
 	return result;
 }
 
-std::string WindowsSocket::getAddrStr(in_addr in) {
+std::string WindowsSocket::getAddrStr(unsigned in) {
+	in_addr temp;
+	temp.S_un.S_addr=in;
+
 	char result[20];
-	if (inet_ntop(AF_INET, &in.S_un.S_addr, result, sizeof(result)) == nullptr)
+	if (inet_ntop(AF_INET, &temp.S_un.S_addr, result, sizeof(result)) == nullptr)
 	{
 		std::cout << "windows socket inet_ntop failed" << std::endl;
 		return "";

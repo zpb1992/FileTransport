@@ -11,9 +11,12 @@
 #define FILETRANSPORT_WINDOWSTHREAD_H
 
 
+#include <windows.h>
+#include <process.h>
+
 class WindowsThread :public PlatformThread  {
 public:
-    void createNewThread(void *(*func)(void *),void *arg) override ;
+    void createNewThread(threadFunc,void *arg) override ;
     unsigned long getThreadID() override ;
 
 };

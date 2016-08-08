@@ -6,6 +6,7 @@
 
 TCPServerFacade::TCPServerFacade() {
     _server=new TCPServer();
+	_server->init();
     _server->createSocket(AF_INET,SOCK_STREAM,0);
 }
 
@@ -17,5 +18,6 @@ void TCPServerFacade::waitConnect(unsigned short port, std::string ip) {
 
 void TCPServerFacade::closeConnection() {
     _server->close();
+	_server->cleanup();
     delete _server;
 }

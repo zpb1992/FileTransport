@@ -15,6 +15,7 @@
 class TCPServer {
 public:
     TCPServer();
+	void init();
     void createSocket(int domain,int type,int protocol);
     void bindAddr(std::string ip,int port);
     void listenTo(int backlog);
@@ -22,6 +23,7 @@ public:
     //void read(int index,std::string file);
     //void write(int index,std::string file);
     void close();
+	void cleanup();
 
 private:
     int _domain;

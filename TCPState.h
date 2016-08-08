@@ -9,28 +9,32 @@
 #include <fstream>
 #include "LinuxSocket.h"
 #include "WindowsSocket.h"
+#include <iostream>
 
 #define BUFFER_MAX 1000
 
 
 class TCPState {
+public:
+	void init();
+	void cleanup();
 protected:
-    ssize_t recvFrom(int socket, void *data, int len);
+    int recvFrom(int socket, void *data, int len);
 
-    ssize_t sendTo(int socket, void *data, int len);
+    int sendTo(int socket, void *data, int len);
 
     int sendFile(int socket, std::string file);
 
     int recvFile(int socket,std::string file);
 
 protected:
-    uint32_t getFileLength(std::ifstream &ifs);
+    unsigned int getFileLength(std::ifstream &ifs);
     long long getFileLength(std::ofstream &ofs);
 
     void numToChar(long long num,char *buffer,int len);
     long long charToNum(char *buffer, int len);
 
-    uint32_t recvUint32(int socket);
+    unsigned int recvUint32(int socket);
 
 protected:
     static PlatformSocket *_platform;
